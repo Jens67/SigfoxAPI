@@ -1,0 +1,4 @@
+to access cronjob:
+sudo crontab -e (from root)
+to add the api to cronjob, so that it runs daily at midnight:
+<0 0  * * * /usr/bin/python3 /home/ubuntu/.../SigfoxAPIv2.py (path where code is stored)

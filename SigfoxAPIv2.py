@@ -9,12 +9,12 @@ import time
 
 #v1:  sigfox_url = "https://backend.sigfox.com/api/callbacks/messages/error"
 # https://api.sigfox.com/v2/groups/{id}/callbacks-not-delivered
-# {id} = ? "VS_Energy_Shop"
-# https://api.sigfox.com/v2/groups/5b87c7bb0499f50769306a49/callbacks-not-delivered
-# where 5b87c7bb0499f50769306a49 = contract name VS_Energy_Shop
-sigfox_url = "https://api.sigfox.com/v2/groups/5b87c7bb0499f50769306a49/callbacks-not-delivered"
-username = "5c0a3acf0499f54f26ff08cc"
-password: str = "c394b9f40e34f5428a13acc3b18c7b56"
+# {id} = ? "Contract_Name"
+# https://api.sigfox.com/v2/groups/contractID/callbacks-not-delivered
+# where contractID = contract name Contract_Name
+sigfox_url = "https://api.sigfox.com/v2/groups/contractID/callbacks-not-delivered"
+username = "username"
+password: str = "password"
 authentication = (username, password)
 
 # Time must be in milliseconds - according to Sigfox API
@@ -52,13 +52,13 @@ print(result)
 # end test code
 
 for i in result["data"]:
-    if i["callback"]["url"] == "http://www.synthesist.co.za:7777/api/sigfoxVisioPulse1":
+    if i["callback"]["url"] == "http://check_destination_URL_is_correct":
         # Format must be: {"device":"{device}", "time":"{time}", "data":"{data}", "seqNumber":"{seqNumber}"}
         payload = i["callback"]["body"]
         # in JSON format
         json_result = json.dumps(payload)
         print(json_result)
-        send_payload = requests.post("http://localhost:80/api/sigfoxVisioPulse1", data=json_result)
+        send_payload = requests.post("http://localhost:80_destination_URL/path", data=json_result)
         records_retrieved = records_retrieved + 1
         status_code1 = send_payload.status_code
         print(status_code1)
@@ -76,13 +76,13 @@ if result["paging"]:
             result = next_response_messages_not_read.json()
 
             for i in result["data"]:
-                if i["callback"]["url"] == "http://www.synthesist.co.za:7777/api/sigfoxVisioPulse1":
+                if i["callback"]["url"] == "http://check_destination_URL_is_correct":
                     # Format must be: {"device":"{device}", "time":"{time}", "data":"{data}", "seqNumber":"{seqNumber}"}
                     payload = i["callback"]["body"]
                     # in JSON format
                     json_result = json.dumps(payload)
                     print(json_result)
-                    send_payload = requests.post("http://localhost:80/api/sigfoxVisioPulse1", data=json_result)
+                    send_payload = requests.post("http://localhost:80_destination_URL/path", data=json_result)
                     records_retrieved = records_retrieved + 1
                     status_code2 = send_payload.status_code
                     print(status_code2)
@@ -100,20 +100,20 @@ if result["paging"]:
             last_result = response_messages_not_read.json()
 
             for i in last_result["data"]:
-                if i["callback"]["url"] == "http://www.synthesist.co.za:7777/api/sigfoxVisioPulse1":
+                if i["callback"]["url"] == "http://check_destination_URL_is_correct":
                     # Format must be: {"device":"{device}", "time":"{time}", "data":"{data}", "seqNumber":"{seqNumber}"}
                     payload = i["callback"]["body"]
                     # in JSON format
                     json_last_result = json.dumps(payload)
                     print(json_last_result)
-                    send_payload = requests.post("http://localhost:80/api/sigfoxVisioPulse1", data=json_last_result)
+                    send_payload = requests.post("http://localhost:80_destination_URL/path", data=json_last_result)
                     records_retrieved = records_retrieved + 1
                     status_code3 = send_payload.status_code
                     print(status_code3)
 
             payload_last = json_last_result
 
-            # send_payload = requests.post("http://www.synthesist.co.za:7777/api/sigfoxVisioPulse1", data=payload_last)
+            # send_payload = requests.post("http://check_destination_URL_is_correct", data=payload_last)
             # status_code3 = send_payload.status_code
             # print(status_code3)
             count = count + 1
@@ -125,10 +125,10 @@ print('Nr of records found:', records_retrieved)
 # Email results
 port = 587  # For starttls
 smtp_server = "smtp.gmail.com"
-sender_email = "tes.sigfox@gmail.com"
-receiver_email = "jens.stratenwerth@gmail.com"
+sender_email = "sender_name@gmail.com"
+receiver_email = "receiver_name@gmail.com"
 # password = input("Type your password and press enter:")
-password = "SigFox123!@#"
+password = "password"
 # message = ("Number of unread messages: \n (100 messages per page, maybe less for last page):", NrOfPages)
 msg1 = """\
 Subject: Sigfox API status
@@ -169,7 +169,7 @@ print('Results emailed')
 # Iterate and extract required data from only our url
 # This part must be uncommented - FROM here
 # for i in result["data"]:
-#   if i["callback"]["url"] == "http://www.synthesist.co.za:7777/api/sigfoxVisioPulse1":
+#   if i["callback"]["url"] == "http://check_destination_URL_is_correct":
 #     payload = i["callback"]["body"]
 # This part must be uncommented - TO here
 #    print(payload)
@@ -180,4 +180,4 @@ print('Results emailed')
 # Use Localhost if API hosted on endpoint or use same url if API is hosted elsewhere
 
 # This next line must be uncommented
-# requests.push('localhost:80/api/sigfoxVisioPulse1',data = payload)
+# requests.push('http://localhost:80_destination_URL/path',data = payload)

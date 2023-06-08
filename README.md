@@ -6,3 +6,5 @@ The api uses embedded variables for specific api contracts and groups
 once amended within the code, no user input is required
 the intention is to deploy it on Ubuntu and
 run the code automatically using cronjob
+
+Sensor.py is the work of https://github.com/home-assistant/core/blob/dev/homeassistant/components/sigfox/sensor.py
